@@ -1,0 +1,9 @@
+[2025-06-04 16:43:08] 🔍 Watching for input files...
+[2025-06-04 16:43:08] 📂 Detected both files. Starting processing.
+[2025-06-04 16:43:46] ✅ Processing completed successfully.
+[2025-06-04 17:16:06] 🔍 Watching for input files...
+[2025-06-04 17:16:06] 📂 Detected both files. Starting processing.
+[2025-06-04 17:16:57] ✅ Processing completed successfully.
+[2025-06-04 17:40:02] 🔍 Watching for input files...
+[2025-06-04 17:40:02] 📂 Detected both files. Starting processing.
+[2025-06-04 17:40:36] ✅ Processing completed successfully.
