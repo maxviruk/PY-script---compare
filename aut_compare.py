@@ -75,7 +75,7 @@ df = df.drop_duplicates(subset=["Key_SAP", "Status"], keep="first")
 df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
 
 # === Step 7: Save and highlight ===
-output_file = "SAP_vs_WD_Final.xlsx"
+output_file = "AS01 - GE - SAP_vs_WD.xlsx"
 df.to_excel(output_file, index=False)
 
 # Highlight ORIGINAL rows in yellow
