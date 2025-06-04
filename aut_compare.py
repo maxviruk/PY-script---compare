@@ -10,7 +10,7 @@ from openpyxl.styles import PatternFill
 watch_dir = os.path.dirname(os.path.abspath(__file__))  # Folder where the script runs
 file_sap = "Table_SAP.xlsx"                              # SAP input file
 file_wd = "Table_WD.xlsx"                                # Workday input file
-output_file = "AS01 - SAP_vs_WD.xlsx"                    # Output Excel file
+output_file = "AS01,AX04,AS03 - SAP_vs_WD.xlsx"                    # Output Excel file
 log_file = "processing_log.txt"                          # Log file
 check_interval = 10  # Seconds to wait before checking for files again
 
@@ -48,7 +48,7 @@ def process_files():
 
 
         # Filter only AS01 absence type
-        sap_df = sap_df[sap_df["A/AType"] == "AS01"].copy()
+        sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04","AS03"])].copy()
         all_columns = sap_df.columns.tolist()
         wd_df["Key_WD"] = wd_df["Employee ID"].astype(str) + "_" + wd_df["Time Off date"].dt.strftime("%Y%m%d")
 
