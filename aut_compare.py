@@ -10,9 +10,9 @@ from openpyxl.styles import PatternFill
 watch_dir = os.path.dirname(os.path.abspath(__file__))  # Folder where the script runs
 file_sap = "Table_SAP.xlsx"                              # SAP input file
 file_wd = "Table_WD.xlsx"                                # Workday input file
-output_file = "AS01,AX04,AS03 - SAP_vs_WD.xlsx"                    # Output Excel file
+output_file = "AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx"     # Output Excel file
 log_file = "processing_log.txt"                          # Log file
-check_interval = 10  # Seconds to wait before checking for files again
+check_interval = 15  # Seconds to wait before checking for files again
 
 
 
@@ -48,7 +48,11 @@ def process_files():
 
 
         # Filter only AS01 absence type
-        sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04","AS03"])].copy()
+        # "AS01", "AX04","AS03" - GE
+        # "AH01" - LUX
+        sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04","AS03", "AH01"])].copy()
+
+        
         all_columns = sap_df.columns.tolist()
         wd_df["Key_WD"] = wd_df["Employee ID"].astype(str) + "_" + wd_df["Time Off date"].dt.strftime("%Y%m%d")
 
@@ -121,8 +125,12 @@ def process_files():
 
 
         # Remove duplicates
-        df = df.drop_duplicates(subset=["Key_SAP", "Status"], keep="first")
+        df = df.sort_values(by="Status", ascending=True)  # keep ORIGINAL at the bottom
         df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
+        
+        # v1
+        #df = df.drop_duplicates(subset=["Key_SAP", "Status"], keep="first")
+        #df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
 
 
         # Save to Excel
