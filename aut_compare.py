@@ -15,14 +15,12 @@ log_file = "processing_log.txt"                          # Log file
 check_interval = 15  # Seconds to wait before checking for files again
 
 
-
 # Required fields to keep and populate
 required_columns = [
     "Pers.No.", "Personnel Number", "EEGrp", "Employee Group", "S", "Employment Status",
     "CoCd", "Company Code", "PA", "Personnel Area", "ESgrp", "Employee Subgroup",
     "Start Date", "End Date", "Start", "End time", "A/AType", "Attendance or Absence Type"
 ]
-
 max_valid_date = pd.Timestamp("2262-04-11")  # Maximum supported date in pandas
 
 
@@ -42,12 +40,13 @@ def process_files():
         out_path = os.path.join(watch_dir, output_file)
 
 
+        log("📂 Loading input files...") 
         # Load SAP and WD files
         sap_df = pd.read_excel(sap_path)
         wd_df = pd.read_excel(wd_path)
 
 
-        # Filter only AS01 absence type
+        # Filter for absence type below:
         # "AS01", "AX04","AS03" - GE
         # "AH01" - LUX
         sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04","AS03", "AH01"])].copy()
@@ -124,11 +123,11 @@ def process_files():
         ).where(df["Status"] != "ORIGINAL", "ORIGINAL")
 
 
-        # Remove duplicates
+        # Remove duplicates v2
         df = df.sort_values(by="Status", ascending=True)  # keep ORIGINAL at the bottom
         df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
         
-        # v1
+        # Remove duplicates v1
         #df = df.drop_duplicates(subset=["Key_SAP", "Status"], keep="first")
         #df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
 
@@ -148,12 +147,11 @@ def process_files():
                 if row[status_col - 1].value == "ORIGINAL":
                     for cell in row:
                         cell.fill = fill
-
         wb.save(out_path)
         wb.close()
 
-        log("✅ Processing completed successfully.")
 
+    log("✅ Processing completed successfully.")
     except Exception as e:
         log(f"❌ ERROR during processing: {e}")
 
