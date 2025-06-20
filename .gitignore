@@ -39,3 +39,4 @@ dist/
 # === Git metadata (don’t add this!)
 !.gitignore
 !.gitattributes
+>>>>>>> 098d510b6516a702f53e869d51550edc8ff1818e
