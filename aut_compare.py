@@ -7,12 +7,12 @@ from openpyxl.styles import PatternFill
 
 
 # === CONFIGURATION ===
-watch_dir = os.path.dirname(os.path.abspath(__file__))  # Folder where the script runs
+watch_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "PY - Data")
 file_sap = "Table_SAP.xlsx"                              # SAP input file
 file_wd = "Table_WD.xlsx"                                # Workday input file
 output_file = "AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx"     # Output Excel file
 log_file = "processing_log.txt"                          # Log file
-check_interval = 15  # Seconds to wait before checking for files again
+check_interval = 15                                      # Seconds to wait before checking for files again
 
 
 # Required fields to keep and populate
