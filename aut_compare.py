@@ -21,7 +21,7 @@ required_columns = [
     "CoCd", "Company Code", "PA", "Personnel Area", "ESgrp", "Employee Subgroup",
     "Start Date", "End Date", "Start", "End time", "A/AType", "Attendance or Absence Type"
 ]
-max_valid_date = pd.Timestamp("2262-04-11")  # Maximum supported date in pandas
+max_valid_date = pd.Timestamp("2262-04-11")
 
 
 # === Logging utility ===
@@ -149,9 +149,8 @@ def process_files():
                         cell.fill = fill
         wb.save(out_path)
         wb.close()
-
-
-    log("✅ Processing completed successfully.")
+        log("✅ Processing completed successfully.")
+        
     except Exception as e:
         log(f"❌ ERROR during processing: {e}")
 
@@ -168,6 +167,6 @@ def wait_for_files():
         time.sleep(check_interval)
 
 
-# === Entry point ===
 if __name__ == "__main__":
     wait_for_files()
+    
