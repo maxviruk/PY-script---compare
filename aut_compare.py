@@ -18,8 +18,7 @@ check_interval = 15                                      # Seconds to wait befor
 # Required fields to keep and populate
 required_columns = [
     "Pers.No.", "Personnel Number", "EEGrp", "Employee Group", "S", "Employment Status",
-    "CoCd", "Company Code", "PA", "Personnel Area", "ESgrp", "Employee Subgroup",
-    "Start Date", "End Date", "Start", "End time", "A/AType", "Attendance or Absence Type"
+    "CoCd", "Company Code", "PA", "Personnel Area", "ESgrp", "Employee Subgroup", "Start Date", "End Date", "Changed by", "Start", "End time", "A/AType", "Attendance or Absence Type"
 ]
 max_valid_date = pd.Timestamp("2262-04-11")
 
