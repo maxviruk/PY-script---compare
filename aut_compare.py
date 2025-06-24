@@ -12,13 +12,14 @@ file_sap = "Table_SAP.xlsx"                              # SAP input file
 file_wd = "Table_WD.xlsx"                                # Workday input file
 output_file = "AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx"     # Output Excel file
 log_file = "processing_log.txt"                          # Log file
-check_interval = 15                                      # Seconds to wait before checking for files again
+check_interval = 10                                      # Seconds to wait before checking for files again
 
 
 # Required fields to keep and populate
 required_columns = [
     "Pers.No.", "Personnel Number", "EEGrp", "Employee Group", "S", "Employment Status",
-    "CoCd", "Company Code", "PA", "Personnel Area", "ESgrp", "Employee Subgroup", "Start Date", "End Date", "Changed by", "Start", "End time", "A/AType", "Attendance or Absence Type"
+    "CoCd", "Company Code", "PA", "Personnel Area", "ESgrp", "Employee Subgroup", "Start Date", 
+    "End Date", "Changed by", "Start", "End time", "A/AType", "Attendance or Absence Type"
 ]
 max_valid_date = pd.Timestamp("2262-04-11")
 
@@ -129,6 +130,21 @@ def process_files():
         # Remove duplicates v1
         #df = df.drop_duplicates(subset=["Key_SAP", "Status"], keep="first")
         #df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
+        
+        
+        # === Replace ":  :" with "-" in 'Start' and 'End time' columns ===
+        for col in ["Start", "End time"]:
+            if col in df.columns:
+                df[col] = df[col].astype(str).replace({":  :": "-"})
+
+
+        # === Check if output file exists, add date suffix if needed ===
+        if os.path.exists(out_path):
+            date_suffix = datetime.now().strftime("%d%m")
+            name, ext = os.path.splitext(output_file)
+            output_file_with_date = f"{name}_{date_suffix}{ext}"
+            out_path = os.path.join(watch_dir, output_file_with_date)
+            log(f"📁 Output file exists. Saving as {output_file_with_date}")
 
 
         # Save to Excel
@@ -168,4 +184,3 @@ def wait_for_files():
 
 if __name__ == "__main__":
     wait_for_files()
-    
