@@ -25,6 +25,7 @@ desktop.ini
 
 # === Local test/output data ===
 /PY - Data/
+/PY - Data - original/
 /output/
 /logs/
 /temp/
