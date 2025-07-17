@@ -81,6 +81,11 @@ def process_files():
         sap_df = pd.read_excel(sap_path)
         wd_df = pd.read_excel(wd_path)
 
+        # Удаляем колонки, если есть
+        for col_to_drop in ["AbsenceDate_SAP", "Key_SAP"]:
+            if col_to_drop in sap_df.columns:
+                sap_df.drop(columns=[col_to_drop], inplace=True)
+
         sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04", "AS03", "AH01"])].copy()
         all_columns = sap_df.columns.tolist()
         wd_df["Key_WD"] = wd_df["Employee ID"].astype(str) + "_" + wd_df["Time Off date"].dt.strftime("%Y%m%d")
@@ -128,7 +133,16 @@ def process_files():
                     }))
 
         df = pd.DataFrame(rows)
+
+        # Заменяем статус с учётом Key_SAP и Key_WD
         df["Status"] = df["Key_SAP"].isin(wd_df["Key_WD"]).map({True: "OK", False: "Missing in WD"}).where(df["Status"] != "ORIGINAL", "ORIGINAL")
+
+        # Заменяем значения в колонке Status по заданию
+        df["Status"] = df["Status"].replace({
+            "Missing in WD": "Python script",
+            "ORIGINAL": "Python script - ORIGINAL"
+        })
+
         df = df.sort_values(by="Status", ascending=True).drop_duplicates(subset=["Key_SAP"], keep="first")
 
         for col in ["Start", "End time"]:
@@ -151,7 +165,7 @@ def process_files():
 
         if status_col:
             for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
-                if row[status_col - 1].value == "ORIGINAL":
+                if row[status_col - 1].value == "Python script - ORIGINAL":
                     for cell in row:
                         cell.fill = fill
         wb.save(out_path)
