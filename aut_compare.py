@@ -9,7 +9,7 @@ from openpyxl.utils import get_column_letter
 
 
 # === CONFIGURATION and required fields keep/populate ===
-watch_dir = os.path.join(os.getcwd(), "PY - Data")
+watch_dir = os.path.join(os.getcwd(), "PY - Data - EOPWD")
 max_valid_date = pd.Timestamp("2262-04-11")
 file_sap = "Table_SAP.xlsx"                              # SAP input file
 file_wd = "Table_WD.xlsx"                                # Workday input file

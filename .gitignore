@@ -24,12 +24,14 @@ desktop.ini
 .ipynb_checkpoints/
 
 # === Local test/output data ===
-/PY - Data/
-/PY - Data - original/
-/output/
-/logs/
-/temp/
-/*.log
+PY - Data - EOPWD/
+PY - Data - WD original/
+PY - Data/
+PY - Data - original/
+output/
+logs/
+temp/
+*.log
 *.bak
 
 # === Build & packaging ===
@@ -37,7 +39,6 @@ build/
 dist/
 *.egg-info/
 
-# === Git metadata (don’t add this!)
+# === Git metadata (don’t add this!) ===
 !.gitignore
 !.gitattributes
->>>>>>> 098d510b6516a702f53e869d51550edc8ff1818e

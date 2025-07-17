@@ -5,9 +5,9 @@ from datetime import datetime
 
 # === CONFIGURATION ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-input_folder = os.path.join(BASE_DIR, "PY - Data - original")
-output_folder = os.path.join(BASE_DIR, "PY - Data")
-mapping_filename = "ColumnMapping.xlsx"
+input_folder = os.path.join(BASE_DIR, "PY - Data - WD original")
+output_folder = os.path.join(BASE_DIR, "PY - Data - EOPWD")
+mapping_filename = "WD - ColumnMapping.xlsx"
 log_file = os.path.join(output_folder, "processing_log_2.txt")
 
 
