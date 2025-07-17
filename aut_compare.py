@@ -7,6 +7,7 @@ from openpyxl.styles import PatternFill, Alignment
 from openpyxl.utils import get_column_letter
 
 
+
 # === CONFIGURATION and required fields keep/populate ===
 watch_dir = os.path.join(os.getcwd(), "PY - Data")
 max_valid_date = pd.Timestamp("2262-04-11")
@@ -26,8 +27,6 @@ required_columns = [
 # === F1 - Check if output file exists ===
 def get_unique_output_path(watch_dir, base_filename):
     base_path = os.path.join(watch_dir, base_filename)
-    
-    # 1. If the base file does not exist — return as is
     if not os.path.exists(base_path):
         return base_path
     
@@ -36,11 +35,9 @@ def get_unique_output_path(watch_dir, base_filename):
     dated_name = f"{name}_{date_suffix}{ext}"
     dated_path = os.path.join(watch_dir, dated_name)
 
-    # 2. If the dated file does not exist — return it
     if not os.path.exists(dated_path):
         return dated_path
     
-    # 3. If dated file exists — add suffix -1, -2, ...
     counter = 1
     while True:
         candidate_name = f"{name}_{date_suffix}-{counter}{ext}"
@@ -53,7 +50,6 @@ def get_unique_output_path(watch_dir, base_filename):
 
 # === F2 - Logging utility ===
 def log(msg):
-    """Write message to log file with timestamp and print to console."""
     with open(os.path.join(watch_dir, log_file), "a", encoding="utf-8") as logf:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logf.write(f"[{timestamp}] {msg}\n")
@@ -61,30 +57,29 @@ def log(msg):
 
 
 
-# === F3 - Add formula columns to the output file ===
+# === F3 - Add formula columns to file ===
 def add_formula_columns(file_path):
-    """Add predefined formula columns to the Excel output file."""
     wb = load_workbook(file_path)
     ws = wb.active
     max_row = ws.max_row
     last_col_idx = ws.max_column
 
     new_columns = [
-        ("Country ID",            '=LEFT(G{row};2)'),
-        ("Country3",              '=VLOOKUP(G{row};Integration!$M:$O;3;0)'),
-        ("SAP / non-SAP",         '=IF(AJ{row}="-";"-";VLOOKUP(AJ{row};Integration!$B:$I;8;0))'),
-        ("#", '''=IF(AND(AK{row}="Non SAP Non Payroll systems";LEN(V{row})=0);"Non SAP Non Payroll systems";
-IF(AK{row}="Non SAP Non Payroll systems";CONCAT(A{row};V{row};M{row});
-IF(AK{row}="SAP Payroll systems";CONCAT(A{row};V{row};M{row});"-")))'''),
-        ("##", '''=IF(AND(AK{row}="Non SAP Non Payroll systems";LEN(V{row})=0);"Non SAP Non Payroll systems";
-IF(AK{row}="Non SAP Non Payroll systems";CONCAT(A{row};V{row};M{row};N{row});
-IF(AK{row}="SAP Payroll systems";CONCAT(A{row};V{row};M{row};N{row});"-")))'''),
+        ("Country ID",            '=LEFT(G{row},2)'),
+        ("Country3",              '=VLOOKUP(G{row},Integration!$M:$O,3,0)'),
+        ("SAP / non-SAP",         '=IF(AJ{row}="-","-",VLOOKUP(AJ{row},Integration!$B:$I,8,0))'),
+        ("#", '''=IF(AND(AK{row}="Non SAP Non Payroll systems",LEN(V{row})=0),"Non SAP Non Payroll systems",
+    IF(AK{row}="Non SAP Non Payroll systems",CONCAT(A{row},V{row},M{row}),
+    IF(AK{row}="SAP Payroll systems",CONCAT(A{row},V{row},M{row}),"-")))'''),
+        ("##", '''=IF(AND(AK{row}="Non SAP Non Payroll systems",LEN(V{row})=0),"Non SAP Non Payroll systems",
+    IF(AK{row}="Non SAP Non Payroll systems",CONCAT(A{row},V{row},M{row},N{row}),
+    IF(AK{row}="SAP Payroll systems",CONCAT(A{row},V{row},M{row},N{row}),"-")))'''),
         ("CHECK", '''=IFERROR(
-IF(YEAR(M{row})=2024;AL{row};
-VLOOKUP(AL{row};WD!$BB:$BB;1;0));"-")'''),
+    IF(YEAR(M{row})=2024,AL{row},
+    VLOOKUP(AL{row},WD!$BB:$BB,1,0)),"-")'''),
         ("OK/NOK", '''=IFERROR(
-IF(YEAR(M{row})=2024;"OK";
-IF(OR(AN{row}<>"-";AP{row}="Integration");"OK";"NOK"));"NOK")'''),
+    IF(YEAR(M{row})=2024,"OK",
+    IF(OR(AN{row}<>"-",AP{row}="Integration"),"OK","NOK")),"NOK")'''),
         ("CHECK - Changed by - L1", None),
         ("CHECK - Changed by - L2", None),
     ]
@@ -103,33 +98,56 @@ IF(OR(AN{row}<>"-";AP{row}="Integration");"OK";"NOK"));"NOK")'''),
 
 
 
-# === F4 - Main processing function ===
+# === F4 - reorder columns in Excel ===
+def reorder_columns(file_path):
+    wb = load_workbook(file_path)
+    ws = wb.active
+
+    headers = [cell.value for cell in ws[1]]
+    cols_to_move = ["AbsenceDate_SAP", "Key_SAP", "PY"]
+    indices_to_move = [headers.index(col) + 1 for col in cols_to_move if col in headers]
+    max_col = ws.max_column
+    max_row = ws.max_row
+    new_col_start = max_col + 1
+
+    #=== F4.1 - Copy the contents of the columns to the end ===
+    for i, col_idx in enumerate(indices_to_move):
+        new_col = new_col_start + i
+        ws.cell(row=1, column=new_col).value = ws.cell(row=1, column=col_idx).value
+        for row in range(2, max_row + 1):
+            ws.cell(row=row, column=new_col).value = ws.cell(row=row, column=col_idx).value
+
+    #=== F4.1 - Delete the old columns from right to left to avoid messing up the index ===
+    for col_idx in sorted(indices_to_move, reverse=True):
+        ws.delete_cols(col_idx)
+
+    wb.save(file_path)
+    wb.close()
+
+
+
+# === F5 - Main processing function ===
 def process_files():
     try:
-        
-        # === Check if output file exists, add date suffix if needed ===
         out_path = get_unique_output_path(watch_dir, output_file)
         log(f"📁 Saving result to: {os.path.basename(out_path)}")
-        
-        
+
         sap_path = os.path.join(watch_dir, file_sap)
         wd_path = os.path.join(watch_dir, file_wd)
 
-
-        # Load SAP and WD files
         log("📂 Loading input files...")
         sap_df = pd.read_excel(sap_path)
         wd_df = pd.read_excel(wd_path)
 
 
-        # Remove unnecessary columns if they exist
+        # === F5.1 - Remove unnecessary columns if they exist ===
         for col_to_drop in ["AbsenceDate_SAP", "Key_SAP"]:
             if col_to_drop in sap_df.columns:
                 sap_df.drop(columns=[col_to_drop], inplace=True)
 
 
-        # Filter for absence types:
-        # "AS01", "AX04", "AS03" - GE
+        # Filter for absence type below:
+        # "AS01", "AX04","AS03" - GE
         # "AH01" - LUX
         sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04", "AS03", "AH01"])].copy()
         all_columns = sap_df.columns.tolist()
@@ -142,8 +160,9 @@ def process_files():
             end = row["End Date"]
             if pd.isnull(start) or pd.isnull(end):
                 continue
-
-            # Fallback row generator with dashes for optional fields
+            
+            
+            # === F5.1 - Fallback row generator with dashes for optional fields ===
             def build_row(overrides):
                 full_row = {col: row[col] if col in required_columns else "-" for col in all_columns}
                 full_row.update(overrides)
@@ -154,7 +173,7 @@ def process_files():
                     "End Date": None,
                     "AbsenceDate_SAP": pd.NaT,
                     "Key_SAP": f"{row['Personnel Number']}_{start.strftime('%Y%m%d')}",
-                    "PY": "ORIGINAL"
+                    "PY": "Python script - ORIGINAL"
                 }))
             elif start == end:
                 rows.append(build_row({
@@ -168,7 +187,7 @@ def process_files():
                 rows.append(build_row({
                     "AbsenceDate_SAP": pd.NaT,
                     "Key_SAP": f"{row['Personnel Number']}_{start.strftime('%Y%m%d')}",
-                    "PY": "ORIGINAL"
+                    "PY": "Python script - ORIGINAL"
                 }))
                 for d in pd.date_range(start, end):
                     rows.append(build_row({
@@ -179,35 +198,31 @@ def process_files():
                         "PY": None
                     }))
 
-
-
-        # === Convert to DataFrame ===
         df = pd.DataFrame(rows)
 
 
-
-        # === Mark which SAP rows are found in WD ===
+        # === F5.2 - Mark which SAP rows are found in WD ===
         df["PY"] = df["Key_SAP"].isin(wd_df["Key_WD"]).map(
             {True: "OK", False: "Python script"}
         ).where(df["PY"] != "Python script - ORIGINAL", "Python script - ORIGINAL")
 
 
-
-
-        # === Remove duplicates v2, keep ORIGINAL at the bottom ===
+        # === F5.3 - Remove duplicates v2 (keep ORIGINAL at the bottom) ===
         df = df.sort_values(by="PY", ascending=True)
         df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
 
 
-
-        # === Replace ":  :" with "-" in 'Start' and 'End time' columns ===
+        # === F5.4 - Replace ":  :" with "-" in 'Start' and 'End time' columns ===
         for col in ["Start", "End time"]:
             if col in df.columns:
                 df[col] = df[col].astype(str).replace({":  :": "-"})
 
-
-
-        # === Переставляем колонки AbsenceDate_SAP, Key_SAP, PY в конец ===
+        # Remove duplicates v1
+        #df = df.drop_duplicates(subset=["Key_SAP", "Status"], keep="first")
+        #df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
+        
+        
+      # === F5.5 - Move columns to the end of the DataFrame ===
         cols = df.columns.tolist()
         for col in ["AbsenceDate_SAP", "Key_SAP", "PY"]:
             if col in cols:
@@ -216,23 +231,18 @@ def process_files():
         df = df[cols]
 
 
+        # === F5.6 - Remove columns AbsenceDate_SAP/Key_SAP ===
+        for col_to_remove in ["AbsenceDate_SAP", "Key_SAP"]:
+            if col_to_remove in df.columns:
+                df.drop(columns=[col_to_remove], inplace=True)
 
 
-
-
-
-
-
-
-
-            
-            
-
-        # Save to Excel
+        # === F5.7 - Save to Excel ===
+        log("📊 Saving results to Excel...")
         df.to_excel(out_path, index=False)
 
 
-        # === Highlight rows PY - "Python script - ORIGINAL" in yellow ===
+        # === F5.8 - Highlight rows with "ORIGINAL" status ===
         wb = load_workbook(out_path)
         ws = wb.active
         fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
@@ -246,16 +256,17 @@ def process_files():
         wb.save(out_path)
         wb.close()
 
-
-        # === Add formula and helper columns (without PY) ===
+        # === F5.9 - Add formula columns (batch 1) after basic processing move batch 2 (AbsenceDate_SAP, Key_SAP, PY) to the end and remove the old columns ===
         add_formula_columns(out_path)
+        reorder_columns(out_path)
+            
         log("✅ Processing completed successfully.")
     except Exception as e:
         log(f"❌ ERROR during processing: {e}")
 
 
-
-# === Wait until required files appear ===
+        
+# === F6 - Wait until required files appear ===
 def wait_for_files():
     log("🚀 Script started. Waiting for files")
     log("🔍 Watching for input files...")
@@ -269,6 +280,7 @@ def wait_for_files():
 
 
 
-# === Monitor the folder and process when files are ready ===
+# === F7 - Monitor folder and process go when files on place ===
 if __name__ == "__main__":
     wait_for_files()
+    
