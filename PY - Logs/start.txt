@@ -1,0 +1,9 @@
+python --version
+pip --version
+
+pip install pandas openpyxl
+
+python main.py
+python aut_compare.py
+python aut_cleanup_wd_file.py
+python aut_join_files.py

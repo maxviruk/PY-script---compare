@@ -10,11 +10,12 @@ from openpyxl.utils import get_column_letter
 
 # === CONFIGURATION and required fields keep/populate ===
 watch_dir = os.path.join(os.getcwd(), "PY - Data - EOPWD")
+log_dir = os.path.join(os.getcwd(), "PY - Logs")
 max_valid_date = pd.Timestamp("2262-04-11")
 file_sap = "Table_SAP.xlsx"                              # SAP input file
 file_wd = "Table_WD.xlsx"                                # Workday input file
 output_file = "AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx"     # Output Excel file
-log_file = "processing_log.txt"                          # Log file
+log_file = "processing_log_1.txt"                        # Log file
 check_interval = 10                                      # Seconds to wait before checking for files again
 required_columns = [
     "Pers.No.", "Personnel Number", "EEGrp", "Employee Group", "S", "Employment Status",
@@ -50,7 +51,7 @@ def get_unique_output_path(watch_dir, base_filename):
 
 # === F2 - Logging utility ===
 def log(msg):
-    with open(os.path.join(watch_dir, log_file), "a", encoding="utf-8") as logf:
+    with open(os.path.join(log_dir, log_file), "a", encoding="utf-8") as logf:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logf.write(f"[{timestamp}] {msg}\n")
     print(f"[{timestamp}] {msg}")

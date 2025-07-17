@@ -1,0 +1,24 @@
+[2025-07-17 22:59:16] Running aut_compare.py
+[2025-07-17 22:59:49] Finished aut_compare.py
+[2025-07-17 22:59:57] Skipped aut_cleanup_wd_file.py
+[2025-07-17 22:59:57] Running aut_join_files.py
+[2025-07-17 23:00:10] Finished aut_join_files.py
+[2025-07-17 23:00:10] All scripts completed successfully.
+[2025-07-17 23:03:27] Skipped aut_cleanup_wd_file.py
+[2025-07-17 23:03:27] Running aut_compare.py
+[2025-07-17 23:04:08] Finished aut_compare.py
+[2025-07-17 23:04:08] Running aut_join_files.py
+[2025-07-17 23:04:33] Finished aut_join_files.py
+[2025-07-17 23:04:33] All scripts completed successfully.
+[2025-07-17 23:18:26] Skipped aut_cleanup_wd_file.py
+[2025-07-17 23:18:26] Running aut_compare.py
+[2025-07-17 23:20:45] Finished aut_compare.py
+[2025-07-17 23:20:45] Running aut_join_files.py
+[2025-07-17 23:21:18] Finished aut_join_files.py
+[2025-07-17 23:21:18] All scripts completed successfully.
+[2025-07-17 23:28:48] Skipped aut_cleanup_wd_file.py
+[2025-07-17 23:28:48] Running aut_compare.py
+[2025-07-17 23:29:59] Finished aut_compare.py
+[2025-07-17 23:29:59] Running aut_join_files.py
+[2025-07-17 23:30:42] Finished aut_join_files.py
+[2025-07-17 23:30:42] All scripts completed successfully.
