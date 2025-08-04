@@ -270,7 +270,7 @@ def process_files():
 # === F6 - Wait until required files appear ===
 def wait_for_files():
     log("🚀 Script started. Waiting for files")
-    log("🔍 Watching for input files...")
+    log("🔍 Watching for input files")
     while True:
         files = os.listdir(watch_dir)
         if file_sap in files and file_wd in files:

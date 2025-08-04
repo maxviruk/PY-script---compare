@@ -22,3 +22,30 @@
 [2025-07-17 23:29:59] Running aut_join_files.py
 [2025-07-17 23:30:42] Finished aut_join_files.py
 [2025-07-17 23:30:42] All scripts completed successfully.
+[2025-08-04 10:01:10] Running aut_cleanup_wd_file.py
+[2025-08-04 10:30:31] Running aut_cleanup_wd_file.py
+[2025-08-04 10:42:06] Finished aut_cleanup_wd_file.py
+[2025-08-04 10:42:06] Running aut_compare.py
+[2025-08-04 10:46:08] Finished aut_compare.py
+[2025-08-04 10:46:08] Running aut_join_files.py
+[2025-08-04 10:46:22] Finished aut_join_files.py
+[2025-08-04 10:46:22] All scripts completed successfully.
+[2025-08-04 11:51:38] Skipped aut_cleanup_wd_file.py
+[2025-08-04 11:51:38] Running aut_compare.py
+[2025-08-04 11:54:54] Finished aut_compare.py
+[2025-08-04 11:54:54] Running aut_join_files.py
+[2025-08-04 11:55:54] Finished aut_join_files.py
+[2025-08-04 11:55:54] All scripts completed successfully.
+[2025-08-04 11:57:26] Skipped aut_cleanup_wd_file.py
+[2025-08-04 11:57:26] Running aut_compare.py
+[2025-08-04 12:00:40] Finished aut_compare.py
+[2025-08-04 12:00:40] Running aut_join_files.py
+[2025-08-04 12:01:49] Finished aut_join_files.py
+[2025-08-04 12:01:49] All scripts completed successfully.
+[2025-08-04 12:10:13] ⏳ Running aut_cleanup_wd_file.py
+[2025-08-04 12:13:42] ✅ Finished aut_cleanup_wd_file.py 🚀
+[2025-08-04 12:13:42] ⏳ Running aut_compare.py
+[2025-08-04 12:16:06] ✅ Finished aut_compare.py
+[2025-08-04 12:16:06] ⏳ Running aut_join_files.py
+[2025-08-04 12:17:08] ✅ Finished aut_join_files.py
+[2025-08-04 12:17:08] ✅ All scripts completed successfully ✅

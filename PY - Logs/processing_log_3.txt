@@ -18,3 +18,23 @@
 [2025-07-17 23:30:00] Loading SAP file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\Table_SAP.xlsx
 [2025-07-17 23:30:05] Loading new file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
 [2025-07-17 23:30:42] Saved combined file as Table_SAP_1.xlsx (added 17963 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
+[2025-08-04 10:46:09] Script started. Waiting for new file...
+[2025-08-04 10:46:09] New file detected: AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 10:46:09] Loading SAP file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\Table_SAP.xlsx
+[2025-08-04 10:46:11] Loading new file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 10:46:21] Saved combined file as Table_SAP_1.xlsx (added 2368 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
+[2025-08-04 11:54:55] Script started. Waiting for new file...
+[2025-08-04 11:54:55] New file detected: AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 11:54:55] Loading SAP file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\Table_SAP.xlsx
+[2025-08-04 11:55:02] Loading new file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 11:55:53] Saved combined file as Table_SAP_1.xlsx (added 26011 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
+[2025-08-04 12:00:41] Script started. Waiting for new file...
+[2025-08-04 12:00:41] New file detected: AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 12:00:41] Loading SAP file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\Table_SAP.xlsx
+[2025-08-04 12:00:47] Loading new file: C:\Users\VIRIKMA\OneDrive - Anheuser-Busch InBev\My Documents\Мои полученные файлы\7. EUR - LoA\4. KPIs\3. Absence Data Accuracy WD to SAP\PY-script---compare\PY - Data - EOPWD\AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 12:01:48] Saved combined file as Table_SAP_1.xlsx (added 26011 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
+[2025-08-04 12:16:07] Script started. Waiting for new file...
+[2025-08-04 12:16:07] New file detected: AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-04 12:16:07] ⏳ Loading SAP file
+[2025-08-04 12:16:13] ⏳ Loading new file
+[2025-08-04 12:17:07] Saved combined file as Table_SAP_1.xlsx (added 26011 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)

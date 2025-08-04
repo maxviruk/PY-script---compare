@@ -45,14 +45,14 @@ def find_new_file(watch_dir, exclude_files):
 # === Append new file rows to SAP file and save as new file with incremented name ===
 def append_new_to_sap(new_file_path, sap_file_path):
     try:
-        log(f"Loading SAP file: {sap_file_path}")
+        log(f"⏳ Loading SAP file")
         sap_df = pd.read_excel(sap_file_path)
     except Exception as e:
         log(f"ERROR loading SAP file: {e}")
         return
 
     try:
-        log(f"Loading new file: {new_file_path}")
+        log(f"⏳ Loading new file")
         new_df = pd.read_excel(new_file_path)
     except Exception as e:
         log(f"ERROR loading new file: {e}")
@@ -88,3 +88,4 @@ def wait_for_new_file_and_process():
 
 if __name__ == "__main__":
     wait_for_new_file_and_process()
+    

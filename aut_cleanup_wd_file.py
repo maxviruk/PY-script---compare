@@ -34,18 +34,18 @@ try:
     input_file_path = os.path.join(input_folder, input_files[0])
     mapping_file_path = os.path.join(input_folder, mapping_filename)
 
-    log(f"📂 Found input file: {input_files[0]}")
+    log(f"📂 Found input file")
 
 
     # === Load column mapping ===
     mapping_df = pd.read_excel(mapping_file_path, usecols=[0, 1], header=None, names=["column", "action"])
     columns_to_delete = mapping_df[mapping_df["action"].str.lower() == "delete"]["column"].tolist()
-    log(f"🔧 Columns marked for deletion: {columns_to_delete}")
+    log(f"🔧 Columns marked for deletion")
 
 
     # === Load input file and skip first 13 rows ===
     df = pd.read_excel(input_file_path, skiprows=13)
-    log(f"📊 File loaded. Columns before cleanup: {df.columns.tolist()}")
+    log(f"📊 File loaded. Columns before cleanup")
 
 
     # === Delete columns based on mapping ===
@@ -56,8 +56,8 @@ try:
         log(f"⚠️ Some columns in the mapping were not found in the file: {not_found}")
 
     df = df.drop(columns=found_to_delete)
-    log(f"🧹 Deleted columns: {found_to_delete}")
-    log(f"✅ Final columns: {df.columns.tolist()}")
+    log(f"🧹 Deleted columns")
+    log(f"✅ Final columns")
 
 
     # === Save the cleaned file with DDMM date suffix ===
