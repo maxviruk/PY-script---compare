@@ -8,12 +8,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 input_folder = os.path.join(BASE_DIR, "PY - Data - WD original")
 output_folder = os.path.join(BASE_DIR, "PY - Data - EOPWD")
 log_dir = os.path.join(BASE_DIR, "PY - Logs")
-log_file = os.path.join(log_dir, "processing_log_2.txt")  # Лог-файл находится в log_dir
+log_file = os.path.join(log_dir, "processing_log_2.txt")
 mapping_filename = "WD - ColumnMapping.xlsx"
+
 
 # === Ensure folders exist ===
 os.makedirs(output_folder, exist_ok=True)
 os.makedirs(log_dir, exist_ok=True)
+
 
 # === Logging function ===
 def log(msg):
@@ -22,8 +24,8 @@ def log(msg):
         f.write(f"[{timestamp}] {msg}\n")
     print(f"[{timestamp}] {msg}")
 
-
 try:
+    
     # === Find the input Excel file (excluding the mapping file) ===
     input_files = [f for f in os.listdir(input_folder)
                    if f.endswith(".xlsx") and f != mapping_filename]
@@ -56,8 +58,8 @@ try:
         log(f"⚠️ Some columns in the mapping were not found in the file: {not_found}")
     df = df.drop(columns=found_to_delete)
     log(f"🧹 Deleted columns")
-    
-    
+
+
     # === Filter: keep only rows with Employment Status ID == 3 ===
     before_count = len(df)
     df = df[df["Employment Status ID"] == 3]
@@ -71,14 +73,16 @@ try:
 
 
     # === Filter: Keep only Time Off entry dates <= today + 3 months ===
-    today = datetime.today().date()
-    cutoff_date = (today + pd.DateOffset(months=3)).date()
+    today = pd.Timestamp.today().normalize()  # no time part
+    cutoff_date = today + pd.DateOffset(months=3)
 
+
+    # Optional: specify format if known, e.g. format="%d.%m.%Y"
     df["Time Off entry"] = pd.to_datetime(df["Time Off entry"], errors='coerce')
 
     before_count = len(df)
-    df = df[df["Time Off entry"].dt.date <= cutoff_date]
-    log(f"🧹 Removed rows where Time Off entry > {cutoff_date} — removed {before_count - len(df)} rows")
+    df = df[df["Time Off entry"] <= cutoff_date]
+    log(f"🧹 Removed rows where Time Off entry > {cutoff_date.date()} — removed {before_count - len(df)} rows")
 
 
     # === Save the cleaned file with DDMM date suffix ===
@@ -91,4 +95,3 @@ try:
 
 except Exception as e:
     log(f"❌ Error: {str(e)}")
-    

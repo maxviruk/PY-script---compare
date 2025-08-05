@@ -50,3 +50,12 @@
 [2025-08-05 23:25:03] 🔧 Columns marked for deletion
 [2025-08-05 23:28:07] 📂 Found input file
 [2025-08-05 23:28:08] 🔧 Columns marked for deletion
+[2025-08-05 23:35:05] 📂 Found input file
+[2025-08-05 23:35:06] 🔧 Columns marked for deletion
+[2025-08-05 23:38:47] 📊 File loaded. Columns before cleanup
+[2025-08-05 23:38:48] 🧹 Deleted columns
+[2025-08-05 23:38:48] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-05 23:38:48] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-05 23:39:00] ❌ Error: Invalid comparison between dtype=datetime64[ns] and date
+[2025-08-05 23:42:01] 📂 Found input file
+[2025-08-05 23:42:01] 🔧 Columns marked for deletion
