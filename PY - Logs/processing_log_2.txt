@@ -46,3 +46,5 @@
 [2025-08-05 10:30:29] ❌ Error: Invalid comparison between dtype=datetime64[ns] and date
 [2025-08-05 23:23:25] 📂 Found input file
 [2025-08-05 23:23:26] 🔧 Columns marked for deletion
+[2025-08-05 23:25:03] 📂 Found input file
+[2025-08-05 23:25:03] 🔧 Columns marked for deletion
