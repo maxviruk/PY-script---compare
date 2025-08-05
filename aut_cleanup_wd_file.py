@@ -54,10 +54,20 @@ try:
 
     if not_found:
         log(f"⚠️ Some columns in the mapping were not found in the file: {not_found}")
-
     df = df.drop(columns=found_to_delete)
     log(f"🧹 Deleted columns")
-    log(f"✅ Final columns")
+    
+    
+    # === Filter: keep only rows with Employment Status ID == 3 ===
+    before_count = len(df)
+    df = df[df["Employment Status ID"] == 3]
+    log(f"🧹 Filtered Employment Status ID != 3 — removed {before_count - len(df)} rows")
+
+
+    # === Filter: remove rows with empty Time Off type ===
+    before_count = len(df)
+    df = df[df["Time Off type"].notna() & (df["Time Off type"].astype(str).str.strip() != "")]
+    log(f"🧹 Removed rows with empty Time Off type — removed {before_count - len(df)} rows")
 
 
     # === Save the cleaned file with DDMM date suffix ===

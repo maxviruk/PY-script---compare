@@ -30,3 +30,5 @@
 [2025-08-04 12:12:06] 🧹 Deleted columns
 [2025-08-04 12:12:06] ✅ Final columns
 [2025-08-04 12:13:39] 💾 File successfully saved: Table_WD_0408.xlsx
+[2025-08-05 09:34:14] 📂 Found input file
+[2025-08-05 09:34:14] 🔧 Columns marked for deletion
