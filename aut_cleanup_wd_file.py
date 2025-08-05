@@ -70,6 +70,17 @@ try:
     log(f"🧹 Removed rows with empty Time Off type — removed {before_count - len(df)} rows")
 
 
+    # === Filter: Keep only Time Off entry dates <= today + 3 months ===
+    today = datetime.today().date()
+    cutoff_date = (today + pd.DateOffset(months=3)).date()
+
+    df["Time Off entry"] = pd.to_datetime(df["Time Off entry"], errors='coerce')
+
+    before_count = len(df)
+    df = df[df["Time Off entry"].dt.date <= cutoff_date]
+    log(f"🧹 Removed rows where Time Off entry > {cutoff_date} — removed {before_count - len(df)} rows")
+
+
     # === Save the cleaned file with DDMM date suffix ===
     date_suffix = datetime.now().strftime("%d%m")
     output_filename = f"Table_WD_{date_suffix}.xlsx"
