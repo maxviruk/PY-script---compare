@@ -39,3 +39,8 @@
 [2025-08-05 09:38:47] 💾 File successfully saved: Table_WD_0508.xlsx
 [2025-08-05 10:28:20] 📂 Found input file
 [2025-08-05 10:28:20] 🔧 Columns marked for deletion
+[2025-08-05 10:30:22] 📊 File loaded. Columns before cleanup
+[2025-08-05 10:30:22] 🧹 Deleted columns
+[2025-08-05 10:30:22] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-05 10:30:22] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-05 10:30:29] ❌ Error: Invalid comparison between dtype=datetime64[ns] and date
