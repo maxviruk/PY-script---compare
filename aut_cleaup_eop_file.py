@@ -1,7 +1,4 @@
 import os
-
-script_code = ""
-import os
 import time
 import pandas as pd
 from datetime import datetime
@@ -58,9 +55,9 @@ def add_formula_columns(file_path):
     last_col_idx = ws.max_column
 
     new_columns = [
-        ("Country ID",            '=LEFT(G{row},2)'),
-        ("Country3",              '=VLOOKUP(G{row};Integration!$M:$O;3;0)'),
-        ("SAP / non-SAP",         '=IF(AK{row}="-";"-";VLOOKUP(AK{row};Integration!$B:$I;8;0))'),
+        ("Country ID", '=LEFT(G{row},2)'),
+        ("Country3", '=VLOOKUP(G{row};Integration!$M:$O;3;0)'),
+        ("SAP / non-SAP", '=IF(AK{row}="-";"-";VLOOKUP(AK{row};Integration!$B:$I;8;0))'),
         ("##", '''=IF(AND(AK{row}="Non SAP Non Payroll systems";LEN(V{row})=0);"Non SAP Non Payroll systems";
     IF(AK{row}="Non SAP Non Payroll systems";CONCAT(A{row};V{row};M{row};N{row});
     IF(AK{row}="SAP Payroll systems";CONCAT(A{row};V{row};M{row};N{row});"-")))'''),
@@ -146,6 +143,30 @@ def add_formula_and_remove_duplicates(file_path, column_title="#"):
     log(f"✅ Column '{column_title}' formula added, {len(rows_to_delete)} duplicates removed.")
 
 
+def merge_with_full_sap(processed_file_path):
+    try:
+        log("🔗 Merging with full SAP data...")
+        sap_path = os.path.join(watch_dir, file_sap)
+        full_sap_df = pd.read_excel(sap_path)
+        processed_df = pd.read_excel(processed_file_path)
+
+        if 'PY' not in processed_df.columns:
+            processed_df['PY'] = "Compared"
+        if 'PY' not in full_sap_df.columns:
+            full_sap_df['PY'] = "-"
+
+        merged_df = pd.concat([full_sap_df, processed_df], ignore_index=True)
+
+        name, ext = os.path.splitext(output_file)
+        merged_filename = f"{name}_merged{ext}"
+        merged_path = os.path.join(watch_dir, merged_filename)
+
+        merged_df.to_excel(merged_path, index=False)
+        log(f"✅ Merged file saved as: {os.path.basename(merged_path)}")
+    except Exception as e:
+        log(f"❌ ERROR during merge: {e}")
+
+
 def process_files():
     try:
         out_path = get_unique_output_path(watch_dir, output_file)
@@ -220,22 +241,11 @@ def process_files():
         log("📊 Saving results to Excel")
         df.to_excel(out_path, index=False)
 
-        wb = load_workbook(out_path)
-        ws = wb.active
-        fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
-        PY_col = {cell.value: idx for idx, cell in enumerate(ws[1], start=1)}.get("PY", None)
-
-        if PY_col:
-            for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
-                if row[PY_col - 1].value == "Python script":
-                    for cell in row:
-                        cell.fill = fill
-        wb.save(out_path)
-        wb.close()
 
         add_formula_columns(out_path)
         reorder_columns(out_path)
         add_formula_and_remove_duplicates(out_path, "#")
+        merge_with_full_sap(out_path)
 
         log("✅ Processing completed successfully.")
     except Exception as e:
@@ -247,11 +257,13 @@ def wait_for_files():
     log("🔍 Watching for input files")
     while True:
         files = os.listdir(watch_dir)
-        if file_sap in files and file_wd in files:
+        files_lower = [f.lower() for f in files]
+        if file_sap.lower() in files_lower and file_wd.lower() in files_lower:
             log("📂 Detected both files. Starting processing.")
             process_files()
             break
         time.sleep(check_interval)
+
 
 
 if __name__ == "__main__":
