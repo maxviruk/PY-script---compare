@@ -72,25 +72,36 @@ try:
     log(f"🧹 Removed rows with empty Time Off type — removed {before_count - len(df)} rows")
 
 
-    # === Filter: Keep only Time Off entry dates <= today + 3 months ===
-    today = pd.Timestamp.today().normalize()  # no time part
+
+    # === Filter: Keep only Time Off date dates <= today + 3 months ===
+    today = pd.Timestamp.today().normalize()
     cutoff_date = today + pd.DateOffset(months=3)
 
+    # Convert with specific format: day/month/year
+    df["Time Off date"] = pd.to_datetime(df["Time Off date"], format="%d/%m/%Y", errors='coerce')
 
-    # Optional: specify format if known, e.g. format="%d.%m.%Y"
-    df["Time Off entry"] = pd.to_datetime(df["Time Off entry"], errors='coerce')
+    invalid_dates = df["Time Off date"].isna().sum()
+    log(f"🧪 Failed to parse 'Time Off date' in {invalid_dates} rows")
 
+    # Apply filter
     before_count = len(df)
-    df = df[df["Time Off entry"] <= cutoff_date]
-    log(f"🧹 Removed rows where Time Off entry > {cutoff_date.date()} — removed {before_count - len(df)} rows")
+    df = df[df["Time Off date"] <= cutoff_date]
+    log(f"🧹 Removed rows where Time Off date > {cutoff_date.date()} — removed {before_count - len(df)} rows")
 
 
-    # === Save the cleaned file with DDMM date suffix ===
+    # === Filter: Keep only selected countries ===
+    allowed_countries = ["Netherlands", "Germany", "Luxembourg"]
+    before_count = len(df)
+    df = df[df["Work Location Country"].isin(allowed_countries)]
+    log(f"🧹 Removed rows not in allowed countries — removed {before_count - len(df)} rows")
+
+
+    # === Final save ===
     date_suffix = datetime.now().strftime("%d%m")
     output_filename = f"Table_WD_{date_suffix}.xlsx"
     output_path = os.path.join(output_folder, output_filename)
 
-    df.to_excel(output_path, index=False)
+    df.to_excel(output_path, index=False)  # ✅ ← внутри блока try
     log(f"💾 File successfully saved: {output_filename}")
 
 except Exception as e:

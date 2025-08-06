@@ -59,3 +59,57 @@
 [2025-08-05 23:39:00] ❌ Error: Invalid comparison between dtype=datetime64[ns] and date
 [2025-08-05 23:42:01] 📂 Found input file
 [2025-08-05 23:42:01] 🔧 Columns marked for deletion
+[2025-08-05 23:44:17] 📊 File loaded. Columns before cleanup
+[2025-08-05 23:44:17] 🧹 Deleted columns
+[2025-08-05 23:44:17] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-05 23:44:17] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-05 23:44:24] 🧹 Removed rows where Time Off entry > 2025-11-05 — removed 114929 rows
+[2025-08-05 23:44:24] 💾 File successfully saved: Table_WD_0508.xlsx
+[2025-08-05 23:50:12] 📂 Found input file
+[2025-08-05 23:50:12] 🔧 Columns marked for deletion
+[2025-08-05 23:51:58] 📊 File loaded. Columns before cleanup
+[2025-08-05 23:51:58] 🧹 Deleted columns
+[2025-08-05 23:51:58] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-05 23:51:58] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-05 23:52:06] 🧹 Removed rows where Time Off entry > 2025-11-05 — removed 114929 rows
+[2025-08-05 23:52:06] 💾 File successfully saved: Table_WD_0508.xlsx
+[2025-08-05 23:59:07] 📂 Found input file
+[2025-08-05 23:59:08] 🔧 Columns marked for deletion
+[2025-08-05 23:59:08] ❌ Error: [Errno 13] Permission denied: 'C:\\Users\\VIRIKMA\\OneDrive - Anheuser-Busch InBev\\My Documents\\Мои полученные файлы\\7. EUR - LoA\\4. KPIs\\3. Absence Data Accuracy WD to SAP\\PY-script---compare\\PY - Data - WD original\\Table_WD_original.xlsx'
+[2025-08-05 23:59:22] 📂 Found input file
+[2025-08-05 23:59:22] 🔧 Columns marked for deletion
+[2025-08-06 00:01:35] 📊 File loaded. Columns before cleanup
+[2025-08-06 00:01:35] 🧹 Deleted columns
+[2025-08-06 00:01:35] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-06 00:01:36] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-06 00:03:02] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-08-06 00:03:02] 🧹 Removed rows where Time Off date > 2025-11-06 — removed 6184 rows
+[2025-08-06 00:03:02] ❌ Error: name 'output_path' is not defined
+[2025-08-06 00:04:56] 📂 Found input file
+[2025-08-06 00:04:56] 🔧 Columns marked for deletion
+[2025-08-06 00:07:15] 📊 File loaded. Columns before cleanup
+[2025-08-06 00:07:15] 🧹 Deleted columns
+[2025-08-06 00:07:15] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-06 00:07:15] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-06 00:07:15] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-08-06 00:07:15] 🧹 Removed rows where Time Off date > 2025-11-06 — removed 6184 rows
+[2025-08-06 00:08:34] 💾 File successfully saved: Table_WD_0608.xlsx
+[2025-08-06 00:10:32] 📂 Found input file
+[2025-08-06 00:10:33] 🔧 Columns marked for deletion
+[2025-08-06 00:12:33] 📊 File loaded. Columns before cleanup
+[2025-08-06 00:12:33] 🧹 Deleted columns
+[2025-08-06 00:12:34] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-06 00:12:34] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-06 00:12:34] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-08-06 00:12:34] 🧹 Removed rows where Time Off date > 2025-11-06 — removed 6184 rows
+[2025-08-06 00:13:59] 💾 File successfully saved: Table_WD_0608.xlsx
+[2025-08-06 00:22:59] 📂 Found input file
+[2025-08-06 00:22:59] 🔧 Columns marked for deletion
+[2025-08-06 00:24:32] 📊 File loaded. Columns before cleanup
+[2025-08-06 00:24:32] 🧹 Deleted columns
+[2025-08-06 00:24:32] 🧹 Filtered Employment Status ID != 3 — removed 5892 rows
+[2025-08-06 00:24:32] 🧹 Removed rows with empty Time Off type — removed 2780 rows
+[2025-08-06 00:24:32] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-08-06 00:24:32] 🧹 Removed rows where Time Off date > 2025-11-06 — removed 6184 rows
+[2025-08-06 00:24:32] 🧹 Removed rows not in allowed countries — removed 73168 rows
+[2025-08-06 00:24:56] 💾 File successfully saved: Table_WD_0608.xlsx

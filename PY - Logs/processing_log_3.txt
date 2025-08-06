@@ -38,3 +38,13 @@
 [2025-08-04 12:16:07] ⏳ Loading SAP file
 [2025-08-04 12:16:13] ⏳ Loading new file
 [2025-08-04 12:17:07] Saved combined file as Table_SAP_1.xlsx (added 26011 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
+[2025-08-06 00:16:10] Script started. Waiting for new file...
+[2025-08-06 00:16:10] New file detected: AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-06 00:16:10] ⏳ Loading SAP file
+[2025-08-06 00:16:14] ⏳ Loading new file
+[2025-08-06 00:16:50] Saved combined file as Table_SAP_1.xlsx (added 26011 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
+[2025-08-06 00:30:39] Script started. Waiting for new file...
+[2025-08-06 00:30:39] New file detected: AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx
+[2025-08-06 00:30:39] ⏳ Loading SAP file
+[2025-08-06 00:30:43] ⏳ Loading new file
+[2025-08-06 00:31:22] Saved combined file as Table_SAP_1.xlsx (added 26011 rows from AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx)
