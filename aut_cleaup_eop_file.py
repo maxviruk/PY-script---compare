@@ -136,7 +136,7 @@ def process_files():
             if col_to_drop in sap_df.columns:
                 sap_df.drop(columns=[col_to_drop], inplace=True)
 
-        sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04", "AS03", "AH01"])].copy()
+        sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04", "AS03", "AH01", "AH02" ])].copy()
         all_columns = sap_df.columns.tolist()
         wd_df["Key_WD"] = wd_df["Employee ID"].astype(str) + "_" + wd_df["Time Off date"].dt.strftime("%Y%m%d")
         rows = []
