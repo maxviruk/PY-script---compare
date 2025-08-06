@@ -24,10 +24,10 @@ try:
     else:
         write_log("Skipped aut_cleanup_wd_file.py")
 
-    print("🚀 Step 2: Running aut_compare.py 🚀")
-    write_log("⏳ Running aut_compare.py")
-    subprocess.run(["python", "aut_compare.py"], check=True)
-    write_log("✅ Finished aut_compare.py")
+    print("🚀 Step 2: Running aut_cleaup_eop_file.py 🚀")
+    write_log("⏳ Running aut_cleaup_eop_file.py")
+    subprocess.run(["python", "aut_cleaup_eop_file.py"], check=True)
+    write_log("✅ Finished aut_cleaup_eop_file.py")
 
     print("🚀 Step 3: Running aut_join_files.py")
     write_log("⏳ Running aut_join_files.py")
