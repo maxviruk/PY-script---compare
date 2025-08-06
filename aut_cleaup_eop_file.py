@@ -3,9 +3,8 @@ import time
 import pandas as pd
 from datetime import datetime
 from openpyxl import load_workbook
-from openpyxl.styles import PatternFill, Alignment
+from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter
-
 
 # === CONFIGURATION ===
 watch_dir = os.path.join(os.getcwd(), "PY - Data - EOPWD")
@@ -23,13 +22,11 @@ required_columns = [
     "End Date", "Changed by", "Start", "End time", "A/AType", "Attendance or Absence Type"
 ]
 
-
 def log(msg):
     with open(os.path.join(log_dir, log_file), "a", encoding="utf-8") as logf:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logf.write(f"[{timestamp}] {msg}\\n")
     print(f"[{timestamp}] {msg}")
-
 
 def get_unique_output_path(watch_dir, base_filename):
     base_path = os.path.join(watch_dir, base_filename)
@@ -47,42 +44,22 @@ def get_unique_output_path(watch_dir, base_filename):
             return candidate_path
         counter += 1
 
-
 def add_formula_columns(file_path):
     wb = load_workbook(file_path)
     ws = wb.active
     max_row = ws.max_row
     last_col_idx = ws.max_column
 
-    new_columns = [
-        ("Country ID", '=LEFT(G{row},2)'),
-        ("Country3", '=VLOOKUP(G{row};Integration!$M:$O;3;0)'),
-        ("SAP / non-SAP", '=IF(AK{row}="-";"-";VLOOKUP(AK{row};Integration!$B:$I;8;0))'),
-        ("##", '''=IF(AND(AK{row}="Non SAP Non Payroll systems";LEN(V{row})=0);"Non SAP Non Payroll systems";
-    IF(AK{row}="Non SAP Non Payroll systems";CONCAT(A{row};V{row};M{row};N{row});
-    IF(AK{row}="SAP Payroll systems";CONCAT(A{row};V{row};M{row};N{row});"-")))'''),
-        ("CHECK", '''=IFERROR(
-    IF(YEAR(M{row})=2024;AL{row};
-    VLOOKUP(AL{row};WD!$BB:$BB;1;0));"-")'''),
-        ("OK/NOK", '''=IFERROR(
-    IF(YEAR(M{row})=2024;"OK";
-    IF(OR(AN{row}<>"-";AP{row}="Integration");"OK";"NOK"));"NOK")'''),
-        ("CHECK - Changed by - L1", None),
-        ("CHECK - Changed by - L2", None),
-    ]
-
-    for i, (col_name, formula_template) in enumerate(new_columns):
-        col_idx = last_col_idx + 1 + i
+    headers = [cell.value for cell in ws[1]]
+    if "PY" not in headers:
+        col_idx = last_col_idx + 1
+        ws.cell(row=1, column=col_idx).value = "PY"
         col_letter = get_column_letter(col_idx)
-        ws[f"{col_letter}1"] = col_name
-        ws[f"{col_letter}1"].alignment = Alignment(horizontal='center')
         for row in range(2, max_row + 1):
-            if formula_template:
-                ws[f"{col_letter}{row}"] = formula_template.format(row=row)
+            ws[f"{col_letter}{row}"] = "Compared"
 
     wb.save(file_path)
     wb.close()
-
 
 def reorder_columns(file_path):
     wb = load_workbook(file_path)
@@ -106,7 +83,6 @@ def reorder_columns(file_path):
 
     wb.save(file_path)
     wb.close()
-
 
 def add_formula_and_remove_duplicates(file_path, column_title="#"):
     wb = load_workbook(file_path)
@@ -138,34 +114,11 @@ def add_formula_and_remove_duplicates(file_path, column_title="#"):
     for r in reversed(rows_to_delete):
         ws.delete_rows(r)
 
+    ws.delete_cols(col_idx)
+
     wb.save(file_path)
     wb.close()
-    log(f"✅ Column '{column_title}' formula added, {len(rows_to_delete)} duplicates removed.")
-
-
-def merge_with_full_sap(processed_file_path):
-    try:
-        log("🔗 Merging with full SAP data...")
-        sap_path = os.path.join(watch_dir, file_sap)
-        full_sap_df = pd.read_excel(sap_path)
-        processed_df = pd.read_excel(processed_file_path)
-
-        if 'PY' not in processed_df.columns:
-            processed_df['PY'] = "Compared"
-        if 'PY' not in full_sap_df.columns:
-            full_sap_df['PY'] = "-"
-
-        merged_df = pd.concat([full_sap_df, processed_df], ignore_index=True)
-
-        name, ext = os.path.splitext(output_file)
-        merged_filename = f"{name}_merged{ext}"
-        merged_path = os.path.join(watch_dir, merged_filename)
-
-        merged_df.to_excel(merged_path, index=False)
-        log(f"✅ Merged file saved as: {os.path.basename(merged_path)}")
-    except Exception as e:
-        log(f"❌ ERROR during merge: {e}")
-
+    log(f"✅ Column '{column_title}' formula added and removed after deleting {len(rows_to_delete)} duplicates.")
 
 def process_files():
     try:
@@ -241,30 +194,24 @@ def process_files():
         log("📊 Saving results to Excel")
         df.to_excel(out_path, index=False)
 
-
         add_formula_columns(out_path)
         reorder_columns(out_path)
         add_formula_and_remove_duplicates(out_path, "#")
-        merge_with_full_sap(out_path)
 
         log("✅ Processing completed successfully.")
     except Exception as e:
         log(f"❌ ERROR during processing: {e}")
 
-
 def wait_for_files():
     log("🚀 Script started. Waiting for files")
     log("🔍 Watching for input files")
     while True:
-        files = os.listdir(watch_dir)
-        files_lower = [f.lower() for f in files]
-        if file_sap.lower() in files_lower and file_wd.lower() in files_lower:
+        files = [f.lower() for f in os.listdir(watch_dir)]
+        if file_sap.lower() in files and file_wd.lower() in files:
             log("📂 Detected both files. Starting processing.")
             process_files()
             break
         time.sleep(check_interval)
-
-
 
 if __name__ == "__main__":
     os.makedirs(log_dir, exist_ok=True)
