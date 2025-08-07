@@ -1,108 +1,120 @@
 import os
+import time
 import pandas as pd
 from datetime import datetime
 
-
 # === CONFIGURATION ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-input_folder = os.path.join(BASE_DIR, "PY - Data - WD original")
-output_folder = os.path.join(BASE_DIR, "PY - Data - EOPWD")
-log_dir = os.path.join(BASE_DIR, "PY - Logs")
-log_file = os.path.join(log_dir, "processing_log_2.txt")
-mapping_filename = "WD - ColumnMapping.xlsx"
+INPUT_FOLDER = os.path.join(BASE_DIR, "PY - Data - WD original")
+OUTPUT_FOLDER = os.path.join(BASE_DIR, "PY - Data - EOPWD")
+LOG_DIR = os.path.join(BASE_DIR, "PY - Logs")
+LOG_FILE = os.path.join(LOG_DIR, "processing_log_2.txt")
+MAPPING_FILENAME = "WD - ColumnMapping.xlsx"
+ALLOWED_COUNTRIES = {"Netherlands", "Germany", "Luxembourg"}
+FILE_NAME_PART = "Absence - EUR - Time Offs Report"
+CHECK_INTERVAL = 10  # seconds
 
 
 # === Ensure folders exist ===
-os.makedirs(output_folder, exist_ok=True)
-os.makedirs(log_dir, exist_ok=True)
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+os.makedirs(LOG_DIR, exist_ok=True)
 
 
-# === Logging function ===
 def log(msg):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(log_file, "a", encoding="utf-8") as f:
-        f.write(f"[{timestamp}] {msg}\n")
-    print(f"[{timestamp}] {msg}")
-
-try:
-    
-    # === Find the input Excel file (excluding the mapping file) ===
-    input_files = [f for f in os.listdir(input_folder)
-                   if f.endswith(".xlsx") and f != mapping_filename]
-    
-    if not input_files:
-        raise FileNotFoundError("❌ No Excel files found in the input folder.")
-
-    input_file_path = os.path.join(input_folder, input_files[0])
-    mapping_file_path = os.path.join(input_folder, mapping_filename)
-
-    log(f"📂 Found input file")
+    entry = f"[{timestamp}] {msg}"
+    print(entry)
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(entry + "\n")
 
 
-    # === Load column mapping ===
-    mapping_df = pd.read_excel(mapping_file_path, usecols=[0, 1], header=None, names=["column", "action"])
-    columns_to_delete = mapping_df[mapping_df["action"].str.lower() == "delete"]["column"].tolist()
-    log(f"🔧 Columns marked for deletion")
+# === Find latest matching input file ===
+def find_latest_matching_file():
+    candidates = []
+    for f in os.listdir(INPUT_FOLDER):
+        if f.endswith(".xlsx") and MAPPING_FILENAME not in f and FILE_NAME_PART in f:
+            full_path = os.path.join(INPUT_FOLDER, f)
+            mod_time = os.path.getmtime(full_path)
+            candidates.append((mod_time, full_path))
+    return max(candidates, key=lambda x: x[0])[1] if candidates else None
 
 
-    # === Load input file and skip first 13 rows ===
-    df = pd.read_excel(input_file_path, skiprows=13)
-    log(f"📊 File loaded. Columns before cleanup")
+# === Load column mapping for deletion ===
+def load_column_mapping():
+    mapping_path = os.path.join(INPUT_FOLDER, MAPPING_FILENAME)
+    mapping_df = pd.read_excel(mapping_path, usecols=[0, 1], header=None, names=["column", "action"])
+    return mapping_df[mapping_df["action"].str.lower() == "delete"]["column"].tolist()
 
 
-    # === Delete columns based on mapping ===
-    not_found = [col for col in columns_to_delete if col not in df.columns]
-    found_to_delete = [col for col in columns_to_delete if col in df.columns]
+# === Main cleanup function ===
+def process_file(input_path):
+    try:
+        columns_to_delete = load_column_mapping()
+        log(f"📂 Loaded column mapping")
 
-    if not_found:
-        log(f"⚠️ Some columns in the mapping were not found in the file: {not_found}")
-    df = df.drop(columns=found_to_delete)
-    log(f"🧹 Deleted columns")
+        df = pd.read_excel(input_path, skiprows=13)
+        log(f"📊 Loaded file '{os.path.basename(input_path)}' with {len(df)} rows")
+
+        # Drop columns
+        actual_cols = set(df.columns)
+        drop_cols = [col for col in columns_to_delete if col in actual_cols]
+        missing_cols = [col for col in columns_to_delete if col not in actual_cols]
+        df.drop(columns=drop_cols, inplace=True)
+        if missing_cols:
+            log(f"⚠️ Columns to delete not found: {missing_cols}")
+        log(f"🧹 Dropped {len(drop_cols)} columns")
+
+        # Filter 1
+        if "Employment Status ID" in df.columns:
+            before = len(df)
+            df = df[df["Employment Status ID"] == 3]
+            log(f"🧹 Employment Status ID != 3 — removed {before - len(df)} rows")
+
+        # Filter 2
+        if "Time Off type" in df.columns:
+            before = len(df)
+            df = df[df["Time Off type"].notna() & (df["Time Off type"].astype(str).str.strip() != "")]
+            log(f"🧹 Empty Time Off type — removed {before - len(df)} rows")
+
+        # Filter 3
+        if "Time Off date" in df.columns:
+            df["Time Off date"] = pd.to_datetime(df["Time Off date"], format="%d/%m/%Y", errors="coerce")
+            failed = df["Time Off date"].isna().sum()
+            log(f"🧪 Failed to parse 'Time Off date' in {failed} rows")
+
+            before = len(df)
+            cutoff = pd.Timestamp.today().normalize() + pd.DateOffset(months=3)
+            df = df[df["Time Off date"] <= cutoff]
+            log(f"🧹 Time Off date > {cutoff.date()} — removed {before - len(df)} rows")
+
+        # Filter 4
+        if "Work Location Country" in df.columns:
+            before = len(df)
+            df = df[df["Work Location Country"].isin(ALLOWED_COUNTRIES)]
+            log(f"🧹 Not in allowed countries — removed {before - len(df)} rows")
+
+        # Save output
+        date_suffix = datetime.now().strftime("%d%m")
+        output_file = f"Table_WD_{date_suffix}.xlsx"
+        output_path = os.path.join(OUTPUT_FOLDER, output_file)
+        df.to_excel(output_path, index=False)
+        log(f"💾 File saved: {output_file}")
+
+    except Exception as e:
+        log(f"❌ Error during processing: {e}")
 
 
-    # === Filter: keep only rows with Employment Status ID == 3 ===
-    before_count = len(df)
-    df = df[df["Employment Status ID"] == 3]
-    log(f"🧹 Filtered Employment Status ID != 3 — removed {before_count - len(df)} rows")
+# === Wait and run ===
+def wait_for_file():
+    log("🚀 Script started. Waiting for input file")
+    while True:
+        latest_file = find_latest_matching_file()
+        if latest_file:
+            log(f"📥 Detected file: {os.path.basename(latest_file)}")
+            process_file(latest_file)
+            break
+        time.sleep(CHECK_INTERVAL)
 
 
-    # === Filter: remove rows with empty Time Off type ===
-    before_count = len(df)
-    df = df[df["Time Off type"].notna() & (df["Time Off type"].astype(str).str.strip() != "")]
-    log(f"🧹 Removed rows with empty Time Off type — removed {before_count - len(df)} rows")
-
-
-
-    # === Filter: Keep only Time Off date dates <= today + 3 months ===
-    today = pd.Timestamp.today().normalize()
-    cutoff_date = today + pd.DateOffset(months=3)
-
-    # Convert with specific format: day/month/year
-    df["Time Off date"] = pd.to_datetime(df["Time Off date"], format="%d/%m/%Y", errors='coerce')
-
-    invalid_dates = df["Time Off date"].isna().sum()
-    log(f"🧪 Failed to parse 'Time Off date' in {invalid_dates} rows")
-
-    # Apply filter
-    before_count = len(df)
-    df = df[df["Time Off date"] <= cutoff_date]
-    log(f"🧹 Removed rows where Time Off date > {cutoff_date.date()} — removed {before_count - len(df)} rows")
-
-
-    # === Filter: Keep only selected countries ===
-    allowed_countries = ["Netherlands", "Germany", "Luxembourg"]
-    before_count = len(df)
-    df = df[df["Work Location Country"].isin(allowed_countries)]
-    log(f"🧹 Removed rows not in allowed countries — removed {before_count - len(df)} rows")
-
-
-    # === Final save ===
-    date_suffix = datetime.now().strftime("%d%m")
-    output_filename = f"Table_WD_{date_suffix}.xlsx"
-    output_path = os.path.join(output_folder, output_filename)
-
-    df.to_excel(output_path, index=False) 
-    log(f"💾 File successfully saved: {output_filename}")
-
-except Exception as e:
-    log(f"❌ Error: {str(e)}")
+if __name__ == "__main__":
+    wait_for_file()
