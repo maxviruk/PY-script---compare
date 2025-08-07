@@ -101,7 +101,7 @@ try:
     output_filename = f"Table_WD_{date_suffix}.xlsx"
     output_path = os.path.join(output_folder, output_filename)
 
-    df.to_excel(output_path, index=False)  # ✅ ← внутри блока try
+    df.to_excel(output_path, index=False) 
     log(f"💾 File successfully saved: {output_filename}")
 
 except Exception as e:

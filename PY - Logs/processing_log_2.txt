@@ -113,3 +113,15 @@
 [2025-08-06 00:24:32] 🧹 Removed rows where Time Off date > 2025-11-06 — removed 6184 rows
 [2025-08-06 00:24:32] 🧹 Removed rows not in allowed countries — removed 73168 rows
 [2025-08-06 00:24:56] 💾 File successfully saved: Table_WD_0608.xlsx
+[2025-08-07 17:13:35] 📂 Found input file
+[2025-08-07 17:13:36] 🔧 Columns marked for deletion
+[2025-08-07 17:13:53] 📊 File loaded. Columns before cleanup
+[2025-08-07 17:13:53] ⚠️ Some columns in the mapping were not found in the file: ['Legal Full Name', 'Supervisory Organization', 'Manager Employee ID Level 02', 'Manager Name Level 02', 'Manager Position ID Level 02', 'Manager Position Name Level 02', 'Manager Employee ID Level 03', 'Manager Name Level 03', 'Manager Position ID Level 03', 'Manager Position Name Level 03', 'Manager Employee ID Level 04', 'Manager Name Level 04', 'Manager Position ID Level 04', 'Manager Position Name Level 04', 'Manager Employee ID Level 05', 'Manager Name Level 05', 'Manager Position ID Level 05', 'Manager Position Name Level 05', 'Hierarchy Manager Employee ID', 'Hierarchy Manager Name', 'Cost Centre Code', 'Cost Center Description', 'Job Family ID', 'Job Family Description', 'Job Code', 'Job Profile Start date', 'Job Profile Description', 'Street Name', 'Additional Address', 'House Number', 'Postal Code', 'Email - Primary Home', 'Primary Work Phone', 'ABI Entity Level 2 ID', 'ABI Entity Level 2 Description', 'Disability', 'Time Off Plan', 'Total Time of Balance', 'Total Time of Taken']
+[2025-08-07 17:13:53] 🧹 Deleted columns
+[2025-08-07 17:13:53] ❌ Error: 'Employment Status ID'
+[2025-08-07 17:14:53] 📂 Found input file
+[2025-08-07 17:14:54] 🔧 Columns marked for deletion
+[2025-08-07 17:15:28] 📊 File loaded. Columns before cleanup
+[2025-08-07 17:15:28] ⚠️ Some columns in the mapping were not found in the file: ['Legal Full Name', 'Supervisory Organization', 'Manager Employee ID Level 02', 'Manager Name Level 02', 'Manager Position ID Level 02', 'Manager Position Name Level 02', 'Manager Employee ID Level 03', 'Manager Name Level 03', 'Manager Position ID Level 03', 'Manager Position Name Level 03', 'Manager Employee ID Level 04', 'Manager Name Level 04', 'Manager Position ID Level 04', 'Manager Position Name Level 04', 'Manager Employee ID Level 05', 'Manager Name Level 05', 'Manager Position ID Level 05', 'Manager Position Name Level 05', 'Hierarchy Manager Employee ID', 'Hierarchy Manager Name', 'Cost Centre Code', 'Cost Center Description', 'Job Family ID', 'Job Family Description', 'Job Code', 'Job Profile Start date', 'Job Profile Description', 'Street Name', 'Additional Address', 'House Number', 'Postal Code', 'Email - Primary Home', 'Primary Work Phone', 'ABI Entity Level 2 ID', 'ABI Entity Level 2 Description', 'Disability', 'Time Off Plan', 'Total Time of Balance', 'Total Time of Taken']
+[2025-08-07 17:15:28] 🧹 Deleted columns
+[2025-08-07 17:15:28] ❌ Error: 'Employment Status ID'
