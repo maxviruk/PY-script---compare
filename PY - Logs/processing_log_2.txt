@@ -135,3 +135,11 @@
 [2025-08-07 17:39:13] 🚀 Script started. Waiting for input file
 [2025-08-07 17:39:13] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-08-05 08_29 GMT+2.xlsx
 [2025-08-07 17:39:13] 📂 Loaded column mapping
+[2025-08-07 17:42:41] 📊 Loaded file 'week - Absence - EUR - Time Offs Report 2025-08-05 08_29 GMT+2.xlsx' with 125060 rows
+[2025-08-07 17:42:41] 🧹 Dropped 39 columns
+[2025-08-07 17:42:42] 🧹 Employment Status ID != 3 — removed 7014 rows
+[2025-08-07 17:42:42] 🧹 Empty Time Off type — removed 2780 rows
+[2025-08-07 17:42:42] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-08-07 17:42:42] 🧹 Time Off date > 2025-11-07 — removed 6248 rows
+[2025-08-07 17:42:42] 🧹 Not in allowed countries — removed 73289 rows
+[2025-08-07 17:43:47] 💾 File saved: Table_WD_0708.xlsx
