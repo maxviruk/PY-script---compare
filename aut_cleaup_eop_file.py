@@ -6,6 +6,7 @@ from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter
 
+
 # === CONFIGURATION ===
 watch_dir = os.path.join(os.getcwd(), "PY - Data - EOPWD")
 log_dir = os.path.join(os.getcwd(), "PY - Logs")
