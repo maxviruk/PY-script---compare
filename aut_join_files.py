@@ -1,17 +1,3 @@
-"""
-aut_join_files.py
-
-This script waits for a new Excel file to appear in the folder, then merges it with the main SAP file.
-Main features:
-1. Watches for a new file (excluding specified files).
-2. Loads SAP and new Excel files.
-3. Filters by allowed CoCd values.
-4. Removes duplicates using Pers.No. + Start Date + A/AType as key.
-5. Saves the combined file with an incremental filename.
-All steps are logged to file and console.
-
-"""
-
 import os
 import time
 from datetime import datetime
