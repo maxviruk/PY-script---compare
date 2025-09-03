@@ -117,3 +117,19 @@
 [2025-09-03 15:45:37] 🧹 Filtered CoCd: remaining 153132, removed 43 rows
 [2025-09-03 15:45:37] 🧹 Pers.No. + Start Date + A/AType: Removed duplicates - 33383
 [2025-09-03 15:47:12] ✅ Saved combined file as Table_SAP_1.xlsx (total 119749 rows)
+[2025-09-03 16:03:39] 🚀 Script started. Waiting for new file
+[2025-09-03 16:03:39] 📂 New file detected: SAP_Expanded.xlsx
+[2025-09-03 16:03:39] ⏳ Loading SAP file
+[2025-09-03 16:03:47] ⏳ Loading new file
+[2025-09-03 16:04:29] 🧾 Combined rows before CoCd filter: 153175
+[2025-09-03 16:04:29] 🧹 Filtered CoCd: remaining 153132, removed 43 rows
+[2025-09-03 16:04:29] 🧹 Pers.No. + Start Date + A/AType: Removed duplicates - 33383
+[2025-09-03 16:06:59] ✅ Saved combined file as Table_SAP_1.xlsx (total 119749 rows)
+[2025-09-03 16:17:15] 🚀 Script started. Waiting for new file
+[2025-09-03 16:17:15] 📂 New file detected: SAP_Expanded.xlsx
+[2025-09-03 16:17:15] ⏳ Loading SAP file
+[2025-09-03 16:17:21] ⏳ Loading new file
+[2025-09-03 16:18:08] 🧾 Combined rows before CoCd filter: 153175
+[2025-09-03 16:18:08] 🧹 Filtered CoCd: remaining 153132, removed 43 rows
+[2025-09-03 16:18:08] 🧹 Pers.No. + Start Date + A/AType: Removed duplicates - 33383
+[2025-09-03 16:19:17] ✅ Saved combined file as Table_SAP_1.xlsx (total 119749 rows)

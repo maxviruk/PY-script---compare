@@ -446,3 +446,21 @@
 [2025-09-03 15:37:21] 📊 Saving results to Excel
 [2025-09-03 15:44:19] ✅ Removed 0 duplicates using temp column '#'.
 [2025-09-03 15:44:19] ✅ Processing completed successfully.
+[2025-09-03 15:56:17] 🚀 Script started. Waiting for files
+[2025-09-03 15:56:17] 🔍 Watching for input files
+[2025-09-03 15:56:17] 📂 Detected SAP and WD files. Latest WD: Table_WD_0309.xlsx. Starting processing.
+[2025-09-03 15:56:17] 📁 Saving result to: SAP_Expanded.xlsx
+[2025-09-03 15:56:17] 📂 Loading input files
+[2025-09-03 15:56:49] ℹ️ Using WD file: Table_WD_0309.xlsx
+[2025-09-03 15:56:55] 📊 Saving results to Excel
+[2025-09-03 16:03:35] ✅ Removed 0 duplicates using temp column '#'.
+[2025-09-03 16:03:35] ✅ Processing completed successfully.
+[2025-09-03 16:11:01] 🚀 Script started. Waiting for files
+[2025-09-03 16:11:01] 🔍 Watching for input files
+[2025-09-03 16:11:01] 📂 Detected SAP and WD files. Latest WD: Table_WD_0309.xlsx. Starting processing.
+[2025-09-03 16:11:01] 📁 Saving result to: SAP_Expanded.xlsx
+[2025-09-03 16:11:01] 📂 Loading input files
+[2025-09-03 16:11:24] ℹ️ Using WD file: Table_WD_0309.xlsx
+[2025-09-03 16:11:32] 📊 Saving results to Excel
+[2025-09-03 16:17:12] ✅ Removed 0 duplicates using temp column '#'.
+[2025-09-03 16:17:12] ✅ Processing completed successfully.
