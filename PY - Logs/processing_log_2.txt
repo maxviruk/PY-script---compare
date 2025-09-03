@@ -190,3 +190,41 @@
 [2025-09-03 14:18:09] 🚀 Script started. Waiting for input file
 [2025-09-03 14:18:09] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx
 [2025-09-03 14:18:09] 📂 Loaded column mapping
+[2025-09-03 14:21:17] 🚀 Script started. Waiting for input file
+[2025-09-03 14:21:17] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx
+[2025-09-03 14:21:17] 📂 Loaded column mapping
+[2025-09-03 14:23:25] 🚀 Script started. Waiting for input file
+[2025-09-03 14:23:25] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx
+[2025-09-03 14:23:25] 📂 Loaded column mapping
+[2025-09-03 14:24:44] 🚀 Script started. Waiting for input file
+[2025-09-03 14:25:04] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx
+[2025-09-03 14:25:05] 📂 Loaded column mapping
+[2025-09-03 14:27:13] 📊 Loaded file 'week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx' with 136595 rows
+[2025-09-03 14:27:13] 🧹 Dropped 39 columns
+[2025-09-03 14:27:13] 🧹 Employment Status ID != 3 — removed 9143 rows
+[2025-09-03 14:27:13] 🧹 Empty Time Off type — removed 2548 rows
+[2025-09-03 14:27:13] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-09-03 14:27:13] 🧹 Time Off date > 2025-12-03 — removed 6003 rows
+[2025-09-03 14:27:13] 🧹 Not in allowed countries — removed 79769 rows
+[2025-09-03 14:27:45] 💾 File saved: Table_WD_0309.xlsx
+[2025-09-03 15:34:39] 🚀 Script started. Waiting for input file
+[2025-09-03 15:34:39] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx
+[2025-09-03 15:34:39] 📂 Loaded column mapping
+[2025-09-03 15:36:06] 📊 Loaded file 'week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx' with 136595 rows
+[2025-09-03 15:36:06] 🧹 Dropped 39 columns
+[2025-09-03 15:36:06] 🧹 Employment Status ID != 3 — removed 9143 rows
+[2025-09-03 15:36:06] 🧹 Empty Time Off type — removed 2548 rows
+[2025-09-03 15:36:07] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-09-03 15:36:07] 🧹 Time Off date > 2025-12-03 — removed 6003 rows
+[2025-09-03 15:36:07] 🧹 Not in allowed countries — removed 79769 rows
+[2025-09-03 15:36:31] 💾 File saved: Table_WD_0309.xlsx
+[2025-09-03 15:52:23] 🚀 Script started. Waiting for input file
+[2025-09-03 15:52:23] 📥 Detected file: week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx
+[2025-09-03 15:52:24] 📂 Loaded column mapping
+[2025-09-03 15:54:58] 📊 Loaded file 'week - Absence - EUR - Time Offs Report 2025-09-03 09_59 GMT+2.xlsx' with 136595 rows
+[2025-09-03 15:54:58] 🧹 Dropped 39 columns
+[2025-09-03 15:54:58] 🧹 Employment Status ID != 3 — removed 9143 rows
+[2025-09-03 15:54:58] 🧹 Empty Time Off type — removed 2548 rows
+[2025-09-03 15:54:58] 🧪 Failed to parse 'Time Off date' in 0 rows
+[2025-09-03 15:54:58] 🧹 Time Off date > 2025-12-03 — removed 6003 rows
+[2025-09-03 15:54:58] 🧹 Not in allowed countries — removed 79769 rows

@@ -89,3 +89,20 @@
 [2025-09-03 14:17:07] ✅ Finished aut_cleaup_eop_file.py
 [2025-09-03 14:17:07] ⏳ Running aut_join_files.py
 [2025-09-03 14:18:09] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 14:21:16] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 14:23:24] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 14:24:44] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 14:27:46] ✅ Finished aut_cleanup_wd_file.py
+[2025-09-03 14:27:46] ⏳ Running aut_cleaup_eop_file.py
+[2025-09-03 14:28:34] ✅ Finished aut_cleaup_eop_file.py
+[2025-09-03 14:28:34] ⏳ Running aut_join_files.py
+[2025-09-03 14:28:58] ✅ Finished aut_join_files.py
+[2025-09-03 14:28:58] ✅ All scripts completed successfully ✅
+[2025-09-03 15:34:39] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 15:36:32] ✅ Finished aut_cleanup_wd_file.py
+[2025-09-03 15:36:32] ⏳ Running aut_cleaup_eop_file.py
+[2025-09-03 15:44:24] ✅ Finished aut_cleaup_eop_file.py
+[2025-09-03 15:44:24] ⏳ Running aut_join_files.py
+[2025-09-03 15:47:14] ✅ Finished aut_join_files.py
+[2025-09-03 15:47:14] ✅ All scripts completed successfully ✅
+[2025-09-03 15:52:23] ⏳ Running aut_cleanup_wd_file.py

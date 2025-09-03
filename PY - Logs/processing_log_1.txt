@@ -432,3 +432,17 @@
 [2025-09-03 14:16:47] 📁 Saving result to: SAP_Expanded.xlsx
 [2025-09-03 14:16:47] 📂 Loading input files
 [2025-09-03 14:17:07] ❌ ERROR during processing: Out of bounds nanosecond timestamp: 9999-12-31 00:00:00, at position 0
+[2025-09-03 14:27:46] 🚀 Script started. Waiting for files
+[2025-09-03 14:27:46] 🔍 Watching for input files
+[2025-09-03 14:28:16] 📂 Detected both files. Starting processing.
+[2025-09-03 14:28:16] 📁 Saving result to: SAP_Expanded.xlsx
+[2025-09-03 14:28:16] 📂 Loading input files
+[2025-09-03 14:28:34] ❌ ERROR during processing: Out of bounds nanosecond timestamp: 9999-12-31 00:00:00, at position 0
+[2025-09-03 15:36:33] 🚀 Script started. Waiting for files
+[2025-09-03 15:36:33] 🔍 Watching for input files
+[2025-09-03 15:36:53] 📂 Detected both files. Starting processing.
+[2025-09-03 15:36:53] 📁 Saving result to: SAP_Expanded.xlsx
+[2025-09-03 15:36:53] 📂 Loading input files
+[2025-09-03 15:37:21] 📊 Saving results to Excel
+[2025-09-03 15:44:19] ✅ Removed 0 duplicates using temp column '#'.
+[2025-09-03 15:44:19] ✅ Processing completed successfully.
