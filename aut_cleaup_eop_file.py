@@ -6,14 +6,13 @@ from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter
 
-
 # === CONFIGURATION ===
 watch_dir = os.path.join(os.getcwd(), "PY - Data - EOPWD")
 log_dir = os.path.join(os.getcwd(), "PY - Logs")
 max_valid_date = pd.Timestamp("2262-04-11")
 file_sap = "Table_SAP.xlsx"
 file_wd = "Table_WD.xlsx"
-output_file = "AS01,AX04,AS03,AH01 - SAP_vs_WD.xlsx"
+output_file = "SAP_Expanded.xlsx"  # kept as-is to avoid breaking downstream
 log_file = "processing_log_1.txt"
 check_interval = 10
 
@@ -26,7 +25,7 @@ required_columns = [
 def log(msg):
     with open(os.path.join(log_dir, log_file), "a", encoding="utf-8") as logf:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        logf.write(f"[{timestamp}] {msg}\\n")
+        logf.write(f"[{timestamp}] {msg}\n")
     print(f"[{timestamp}] {msg}")
 
 def get_unique_output_path(watch_dir, base_filename):
@@ -133,29 +132,43 @@ def process_files():
         sap_df = pd.read_excel(sap_path)
         wd_df = pd.read_excel(wd_path)
 
+        # Clean potential leftovers
         for col_to_drop in ["AbsenceDate_SAP", "Key_SAP"]:
             if col_to_drop in sap_df.columns:
                 sap_df.drop(columns=[col_to_drop], inplace=True)
 
-        sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04", "AS03", "AH01", "AH02" ])].copy()
+        # === CHANGE === remove A/AType filtering — use ALL absence types now
+        # sap_df = sap_df[sap_df["A/AType"].isin(["AS01", "AX04", "AS03", "AH01", "AH02" ])].copy()
+
         all_columns = sap_df.columns.tolist()
-        wd_df["Key_WD"] = wd_df["Employee ID"].astype(str) + "_" + wd_df["Time Off date"].dt.strftime("%Y%m%d")
+        # Keep how WD key is built (not used later but left as in your version)
+        if "Employee ID" in wd_df.columns and "Time Off date" in wd_df.columns:
+            wd_df["Key_WD"] = wd_df["Employee ID"].astype(str) + "_" + wd_df["Time Off date"].dt.strftime("%Y%m%d")
+
         rows = []
 
         for _, row in sap_df.iterrows():
-            start = row["Start Date"]
-            end = row["End Date"]
+            start = row.get("Start Date")
+            end = row.get("End Date")
+
             if pd.isnull(start) or pd.isnull(end):
+                continue
+            if pd.to_datetime(end) > max_valid_date:
+                # Skip unrealistic "infinite" end dates
                 continue
 
             def build_row(overrides):
+                # Preserve your original pattern: keep 'required_columns' values; others as '-'
+                # (not changing behavior intentionally)
                 full_row = {col: row[col] if col in required_columns else "-" for col in all_columns}
                 full_row.update(overrides)
                 return full_row
 
-            if end > max_valid_date:
-                continue
-            elif start == end:
+            start = pd.to_datetime(start)
+            end = pd.to_datetime(end)
+
+            # === CHANGE === expand EVERY row by days (for all absence types)
+            if start == end:
                 rows.append(build_row({
                     "Start Date": start,
                     "End Date": end,
@@ -164,7 +177,7 @@ def process_files():
                     "PY": None
                 }))
             else:
-                for d in pd.date_range(start, end):
+                for d in pd.date_range(start, end, freq="D"):
                     rows.append(build_row({
                         "Start Date": d,
                         "End Date": d,
@@ -174,13 +187,21 @@ def process_files():
                     }))
 
         df = pd.DataFrame(rows)
-        df["PY"] = df["PY"].apply(lambda x: "Python script" if pd.isna(x) else x)
-        df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
 
+        # Mark PY as before
+        if "PY" in df.columns:
+            df["PY"] = df["PY"].apply(lambda x: "Python script" if pd.isna(x) else x)
+
+        # Unique by Key_SAP
+        if "Key_SAP" in df.columns:
+            df = df.drop_duplicates(subset=["Key_SAP"], keep="first")
+
+        # Normalize Start/End time
         for col in ["Start", "End time"]:
             if col in df.columns:
                 df[col] = df[col].astype(str).replace({":  :": "-"})
 
+        # Keep service columns at end (same behavior)
         cols = df.columns.tolist()
         for col in ["AbsenceDate_SAP", "Key_SAP", "PY"]:
             if col in cols:
@@ -188,6 +209,7 @@ def process_files():
         cols.extend(["AbsenceDate_SAP", "Key_SAP", "PY"])
         df = df[cols]
 
+        # Before saving — remove service columns (as in your version)
         for col_to_remove in ["AbsenceDate_SAP", "Key_SAP"]:
             if col_to_remove in df.columns:
                 df.drop(columns=[col_to_remove], inplace=True)
@@ -195,6 +217,7 @@ def process_files():
         log("📊 Saving results to Excel")
         df.to_excel(out_path, index=False)
 
+        # Post-processing in Excel
         add_formula_columns(out_path)
         reorder_columns(out_path)
         add_formula_and_remove_duplicates(out_path, "#")

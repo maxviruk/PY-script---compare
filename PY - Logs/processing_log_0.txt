@@ -70,3 +70,22 @@
 [2025-08-20 15:08:53] ⏳ Running aut_join_files.py
 [2025-08-20 15:11:15] ✅ Finished aut_join_files.py
 [2025-08-20 15:11:15] ✅ All scripts completed successfully ✅
+[2025-09-03 13:46:55] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 13:49:08] ✅ Finished aut_cleanup_wd_file.py
+[2025-09-03 13:49:08] ⏳ Running aut_cleaup_eop_file.py
+[2025-09-03 13:57:55] ✅ Finished aut_cleaup_eop_file.py
+[2025-09-03 13:57:55] ⏳ Running aut_join_files.py
+[2025-09-03 13:58:16] ✅ Finished aut_join_files.py
+[2025-09-03 13:58:16] ✅ All scripts completed successfully ✅
+[2025-09-03 14:09:45] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 14:12:12] ✅ Finished aut_cleanup_wd_file.py
+[2025-09-03 14:12:12] ⏳ Running aut_cleaup_eop_file.py
+[2025-09-03 14:12:17] ✅ Finished aut_cleaup_eop_file.py
+[2025-09-03 14:12:17] ⏳ Running aut_join_files.py
+[2025-09-03 14:12:36] [ERROR] aut_join_files.py failed: Command '['python', 'aut_join_files.py']' returned non-zero exit status 1.
+[2025-09-03 14:14:21] ⏳ Running aut_cleanup_wd_file.py
+[2025-09-03 14:16:26] ✅ Finished aut_cleanup_wd_file.py
+[2025-09-03 14:16:26] ⏳ Running aut_cleaup_eop_file.py
+[2025-09-03 14:17:07] ✅ Finished aut_cleaup_eop_file.py
+[2025-09-03 14:17:07] ⏳ Running aut_join_files.py
+[2025-09-03 14:18:09] ⏳ Running aut_cleanup_wd_file.py
